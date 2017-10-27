@@ -61,9 +61,8 @@ public class BasicOpMode_Linear2 extends LinearOpMode {
     private DcMotor BLeftMotor = null;
     private DcMotor BRightMotor = null;
     private DcMotor lyftdrive = null;
-    //private DcMotor suckDrive = null;
+    private DcMotor suckDrive = null;
     private DcMotor armDrive = null;
-
     private Servo servo1 = null;
 
     @Override
@@ -74,10 +73,10 @@ public class BasicOpMode_Linear2 extends LinearOpMode {
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
-        BLeftMotor  = hardwareMap.get(DcMotor.class, "BleftMotor");
+        BLeftMotor = hardwareMap.get(DcMotor.class, "BleftMotor");
         BRightMotor = hardwareMap.get(DcMotor.class, "BrightMotor");
         lyftdrive = hardwareMap.get(DcMotor.class, "lyft_motor");
-        //suckDrive = hardwareMap.get(DcMotor.class, "suck_motor");
+        suckDrive = hardwareMap.get(DcMotor.class, "suck_motor");
         armDrive = hardwareMap.get(DcMotor.class, "arm_motor");
 
         servo1 = hardwareMap.get(Servo.class, "Servo1");
@@ -87,7 +86,7 @@ public class BasicOpMode_Linear2 extends LinearOpMode {
         BLeftMotor.setDirection(DcMotor.Direction.REVERSE);
         BRightMotor.setDirection(DcMotor.Direction.FORWARD);
         lyftdrive.setDirection(DcMotor.Direction.REVERSE);
-        //suckDrive.setDirection(DcMotor.Direction.FORWARD);
+        suckDrive.setDirection(DcMotor.Direction.FORWARD);
         armDrive.setDirection(DcMotor.Direction.REVERSE);
 
         //servo1.setDirection(Servo.Direction.FORWARD);
@@ -104,7 +103,7 @@ public class BasicOpMode_Linear2 extends LinearOpMode {
             double rightPower;
             double lyftPowerUp;
             double lyftPowerDown;
-            //double suckPowerOn = 0.0;
+            double suckPowerOn = 0.0;
             double armPowerDown;
             double armPowerUp;
             //double leftPower2;
@@ -115,46 +114,53 @@ public class BasicOpMode_Linear2 extends LinearOpMode {
             // POV Mode uses left stick to go forward, and right stick to turn.
             // - This uses basic math to combine motions and is easier to drive straight.
             double drive = gamepad1.left_stick_y;
-            double turn  =  -gamepad1.right_stick_x;
+            double turn = -gamepad1.right_stick_x;
             double lyftUp = gamepad1.left_trigger;
             double lyftDown = gamepad1.right_trigger;
-            //boolean suckOn = gamepad1.y;
+            boolean suckOn = gamepad1.y;
             boolean armDown = gamepad1.right_bumper;
             boolean armUp = gamepad1.left_bumper;
-            boolean servo1v =gamepad1.y;
-
-            leftPower    = Range.clip(Math.pow((drive + turn),3), -1.0, 1.0) ;
-            rightPower   = Range.clip(Math.pow((drive - turn),3), -1.0, 1.0) ;
-            lyftPowerUp = Range.clip(lyftUp,0.0,1.0);
-            lyftPowerDown = Range.clip(lyftDown,0.0,1.0);
-            //servo1 = Range.
-
-            //if (gamepad1.y){ suckDrive.setPower(1);}
-            //if (!gamepad1.y){suckDrive.setPower(0);}
-            if (gamepad1.right_bumper){armDrive.setPower(1.0);}
-            if (!gamepad1.right_bumper){armDrive.setPower(0);}
-            if (gamepad1.left_bumper){armDrive.setPower(-1.0);}
-            if (!gamepad1.left_bumper){armDrive.setPower(0);}
-            if (gamepad1.y){servo1.setPosition(1);}
-            else {servo1.setPosition(-1);
 
 
-            // Tank Mode uses one stick to control each wheel.
-            // - This requires no math, but it is hard to drive forward slowly and keep straight.
-            // leftPower  = -gamepad1.left_stick_y ;
-             //rightPower = -gamepad1.right_stick_y ;
-            // Send calculated power to wheels
-            BLeftMotor.setPower(leftPower);
-            BRightMotor.setPower(rightPower);
-            lyftdrive.setPower(lyftPowerUp-lyftPowerDown);
+            leftPower = Range.clip(Math.pow((drive + turn), 3), -1.0, 1.0);
+            rightPower = Range.clip(Math.pow((drive - turn), 3), -1.0, 1.0);
+            lyftPowerUp = Range.clip(lyftUp, 0.0, 1.0);
+            lyftPowerDown = Range.clip(lyftDown, 0.0, 1.0);
 
-            //TLeftMotor.setPower(leftPower2);
-            //TRightMotor.setPower(rightPower2);
 
-            // Show the elapsed game time and wheel power.
-            telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
-            telemetry.update();
+            if (gamepad1.a) {
+                suckDrive.setPower(1);
+            }
+            if (!gamepad1.a) {
+                suckDrive.setPower(0);
+            }
+            if (gamepad1.right_bumper) {
+                armDrive.setPower(1.0);
+            }
+            if (!gamepad1.right_bumper) {
+                armDrive.setPower(0);
+            }
+            if (gamepad1.left_bumper) {
+                armDrive.setPower(-1.0);
+            }
+            if (!gamepad1.left_bumper) {
+                armDrive.setPower(0);
+            }
+            if (gamepad1.y) {
+                servo1.setPosition(1);
+            } else {
+                servo1.setPosition(-1);
+
+
+                BLeftMotor.setPower(leftPower);
+                BRightMotor.setPower(rightPower);
+                lyftdrive.setPower(lyftPowerUp - lyftPowerDown);
+
+                // Show the elapsed game time and wheel power.
+                telemetry.addData("Status", "Run Time: " + runtime.toString());
+                telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
+                telemetry.update();
+            }
         }
     }
 }
