@@ -107,8 +107,7 @@ public class BasicOpMode_Linear2 extends LinearOpMode {
             double suckPowerOn = 0.0;
             double armPowerDown;
             double armPowerUp;
-            //double leftPower2;
-            //double rightPower2;
+            boolean servoState=false;
 
             // Choose to drive using either Tank Mode, or POV Mode
             // Comment out the method that's not used.  The default below is POV.
@@ -147,8 +146,11 @@ public class BasicOpMode_Linear2 extends LinearOpMode {
             if (!gamepad1.left_bumper) {
                 armDrive.setPower(0);
             }
-            if (gamepad1.y) {
-                servo1.setPosition(-1);
+            if (gamepad1.left_stick_button) {
+
+                servoState=!servoState;
+                if (servoState && !gamepad1.left_stick_button){ servo1.setPosition(-1);}
+
             } else {
                 servo1.setPosition(1);
 
