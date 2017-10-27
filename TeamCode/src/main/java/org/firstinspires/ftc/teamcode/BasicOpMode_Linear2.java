@@ -129,7 +129,7 @@ public class BasicOpMode_Linear2 extends LinearOpMode {
             lyftPowerDown = Range.clip(lyftDown,0.0,1.0);
             //servo1 = Range.
 
-            //if (gamepad1.y){suckDrive.setPower(1);}
+            //if (gamepad1.y){ suckDrive.setPower(1);}
             //if (!gamepad1.y){suckDrive.setPower(0);}
             if (gamepad1.right_bumper){armDrive.setPower(1.0);}
             if (!gamepad1.right_bumper){armDrive.setPower(0);}
