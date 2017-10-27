@@ -86,11 +86,12 @@ public class BasicOpMode_Linear2 extends LinearOpMode {
         BLeftMotor.setDirection(DcMotor.Direction.REVERSE);
         BRightMotor.setDirection(DcMotor.Direction.FORWARD);
         lyftdrive.setDirection(DcMotor.Direction.REVERSE);
-        suckDrive.setDirection(DcMotor.Direction.FORWARD);
+        suckDrive.setDirection(DcMotor.Direction.REVERSE);
         armDrive.setDirection(DcMotor.Direction.REVERSE);
 
         //servo1.setDirection(Servo.Direction.FORWARD);
 
+        //MASTER HACKER: I DIDS IT BRAH
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         runtime.reset();
@@ -147,9 +148,9 @@ public class BasicOpMode_Linear2 extends LinearOpMode {
                 armDrive.setPower(0);
             }
             if (gamepad1.y) {
-                servo1.setPosition(1);
-            } else {
                 servo1.setPosition(-1);
+            } else {
+                servo1.setPosition(1);
 
 
                 BLeftMotor.setPower(leftPower);
