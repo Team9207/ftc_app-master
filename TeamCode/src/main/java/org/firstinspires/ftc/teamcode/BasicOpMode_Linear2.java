@@ -91,7 +91,6 @@ public class BasicOpMode_Linear2 extends LinearOpMode {
 
         //servo1.setDirection(Servo.Direction.FORWARD);
 
-        //MASTER HACKER: I DIDS IT BRAH
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         runtime.reset();
