@@ -146,7 +146,7 @@ public class BasicOpMode_Linear2 extends LinearOpMode {
             if (!gamepad1.left_bumper) {
                 armDrive.setPower(0);
             }
-            if (gamepad1.a) {servo1.setPosition(-1);}
+            if (gamepad1.y) {servo1.setPosition(-1);}
             else {servo1.setPosition(1);};
 
 
