@@ -19,7 +19,7 @@ public class Op_Mecanum_Drive extends OpMode
     public static final String LEFTDRIVE_B_MAP = "leftMotorB";                     //Constant for Hardware Map
     public static final String RIGHTDRIVE_F_MAP = "rightMotorF";                   //Constant for Hardware Map
     public static final String RIGHTDRIVE_B_MAP = "rightMotorB";                   //Constant for Hardware Map
-    public static final Double EXPO = 9.0;                                         //Constant for Expo value for control
+    public static final Double EXPO = 5.0;                                         //Constant for Expo value for control
 
 
     // Declare OpMode members.
