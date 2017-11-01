@@ -75,6 +75,9 @@ public class Op_Mecanum_Drive extends OpMode
         rightDriveF.setPower(Range.clip((Math.pow((vertComp-horzComp+spinComp),EXPO)),-1,1));
         rightDriveB.setPower(Range.clip((Math.pow((vertComp+horzComp+spinComp),EXPO)),-1,1));
 
+        telemetry.addData("LX",horzComp);
+        telemetry.addData("LY",vertComp);
+        telemetry.addData("RX",spinComp);
         telemetry.addData ("LF-PWR",Double.toString(leftDriveF.getPower()));
         telemetry.addData ("LB-PWR",Double.toString(leftDriveB.getPower()));
         telemetry.addData("RF-PWR",Double.toString(rightDriveF.getPower()));

@@ -129,7 +129,7 @@ public class BasicOpMode_Linear2 extends LinearOpMode {
 
 
             if (gamepad1.a) {
-                suckDrive.setPower(1);
+                suckDrive.setPower(-1);
             }
             if (!gamepad1.a) {
                 suckDrive.setPower(0);
@@ -147,9 +147,9 @@ public class BasicOpMode_Linear2 extends LinearOpMode {
                 armDrive.setPower(0);
             }
             if (gamepad1.y) {
-                servo1.setPosition(-1);
-            } else {
                 servo1.setPosition(1);
+            } else {
+                servo1.setPosition(-1);
 
 
                 BLeftMotor.setPower(leftPower);
