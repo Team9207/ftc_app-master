@@ -31,82 +31,30 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
-import java.util.concurrent.SynchronousQueue;
 
 /**
  * Demonstrates empty OpMode
  */
-@Autonomous(name = "Concept: NullOp", group = "Concept")
-
-public class ConceptNullOpTrial extends OpMode {
-
+@Autonomous(name = "Concept: NullOp2", group = "Concept")
+//@Disabled
+public class ConceptNullOp2 extends OpMode {
   private ElapsedTime runtime = new ElapsedTime();
-  private DcMotor BLeftMotor = null;
-  private DcMotor BRightMotor = null;
-  private DcMotor lyftdrive = null;
-  private DcMotor suckDrive = null;
-  private DcMotor armDrive = null;
-  private Servo servo1 = null;
-  /**
-   diameter = 4.7 inches
-   420 ticks per rotation
-   14.8 in per rotation = 1.23 ft
-   6.56 feet = 2 meters
-   WE WANT 5.3 ROTATIONS
-   WE NEED 2226 TICKS
-   */
-
-  public void MoveForward (double feet){
-    BLeftMotor.setTargetPosition((int)(feet * 342));
-    BRightMotor.setTargetPosition((int)(feet * 342));
-  }
+  private DcMotor MotorL = null;
 
   @Override
-  public void init() {
+  public void init (){
     telemetry.addData("Status", "Initialized");
-    telemetry.update();
-
-    // Initialize the hardware variables. Note that the strings used here as parameters
-    // to 'get' must correspond to the names assigned during the robot configuration
-    // step (using the FTC Robot Controller app on the phone).
-
-    /**
-    diameter = 4.7 inches
-    420 ticks per rotation
-    14.8 in per rotation
-     6.56 feet = 2 meters
-     WE WANT 5.3 ROTATIONS
-     WE NEED 2226 TICKS
-     */
-    BLeftMotor = hardwareMap.get(DcMotor.class, "BleftMotor");
-    BRightMotor = hardwareMap.get(DcMotor.class, "BrightMotor");
-    lyftdrive = hardwareMap.get(DcMotor.class, "lyft_motor");
-    suckDrive = hardwareMap.get(DcMotor.class, "suck_motor");
-    armDrive = hardwareMap.get(DcMotor.class, "arm_motor");
-
-    BLeftMotor.setDirection(DcMotor.Direction.REVERSE);
-    BRightMotor.setDirection(DcMotor.Direction.FORWARD);
-    lyftdrive.setDirection(DcMotor.Direction.REVERSE);
-    suckDrive.setDirection(DcMotor.Direction.REVERSE);
-    armDrive.setDirection(DcMotor.Direction.REVERSE);
   }
-
   /*
      * Code to run when the op mode is first enabled goes here
      * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#start()
      */
-
   @Override
   public void init_loop() {
-
   }
-
   /*
    * This method will be called ONCE when start is pressed
    * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#loop()
@@ -115,8 +63,6 @@ public class ConceptNullOpTrial extends OpMode {
   public void start() {
     runtime.reset();
   }
-
-
   /*
    * This method will be called repeatedly in a loop
    * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#loop()
@@ -125,5 +71,4 @@ public class ConceptNullOpTrial extends OpMode {
   public void loop() {
     telemetry.addData("Status", "Run Time: " + runtime.toString());
   }
-
 }

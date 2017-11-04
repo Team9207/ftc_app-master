@@ -86,7 +86,7 @@ public class BasicOpMode_Linear2 extends LinearOpMode {
         BLeftMotor.setDirection(DcMotor.Direction.REVERSE);
         BRightMotor.setDirection(DcMotor.Direction.FORWARD);
         lyftdrive.setDirection(DcMotor.Direction.REVERSE);
-        suckDrive.setDirection(DcMotor.Direction.REVERSE);
+        suckDrive.setDirection(DcMotor.Direction.FORWARD);
         armDrive.setDirection(DcMotor.Direction.REVERSE);
 
         //servo1.setDirection(Servo.Direction.FORWARD);
@@ -114,7 +114,7 @@ public class BasicOpMode_Linear2 extends LinearOpMode {
             // Comment out the method that's not used.  The default below is POV.
             // POV Mode uses left stick to go forward, and right stick to turn.
             // - This uses basic math to combine motions and is easier to drive straight.
-            double drive = gamepad1.left_stick_y;
+            double drive = -gamepad1.left_stick_y;
             double turn = -gamepad1.right_stick_x;
             double lyftUp = gamepad1.left_trigger;
             double lyftDown = gamepad1.right_trigger;
