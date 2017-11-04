@@ -52,9 +52,9 @@ import com.qualcomm.robotcore.util.Range;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Basic: Linear OpMode", group="Linear Opmode")
+@TeleOp(name="Regular Drive", group="Linear Opmode")
 //@Disabled
-public class BasicOpMode_Linear2 extends LinearOpMode {
+public class Driver2 extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -78,7 +78,6 @@ public class BasicOpMode_Linear2 extends LinearOpMode {
         lyftdrive = hardwareMap.get(DcMotor.class, "lyft_motor");
         suckDrive = hardwareMap.get(DcMotor.class, "suck_motor");
         armDrive = hardwareMap.get(DcMotor.class, "arm_motor");
-
         servo1 = hardwareMap.get(Servo.class, "Servo1");
 
         // Most robots need the motor on one side to be reversed to drive forward
@@ -89,13 +88,10 @@ public class BasicOpMode_Linear2 extends LinearOpMode {
         suckDrive.setDirection(DcMotor.Direction.FORWARD);
         armDrive.setDirection(DcMotor.Direction.REVERSE);
 
-        //servo1.setDirection(Servo.Direction.FORWARD);
-
-        //MASTER HACKER: I DIDS IT BRAH
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         runtime.reset();
-
+        lyftdrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
 
@@ -156,7 +152,6 @@ public class BasicOpMode_Linear2 extends LinearOpMode {
                 BLeftMotor.setPower(leftPower);
                 BRightMotor.setPower(rightPower);
                 lyftdrive.setPower(lyftPowerUp - lyftPowerDown);
-
                 // Show the elapsed game time and wheel power.
                 telemetry.addData("Status", "Run Time: " + runtime.toString());
                 telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
