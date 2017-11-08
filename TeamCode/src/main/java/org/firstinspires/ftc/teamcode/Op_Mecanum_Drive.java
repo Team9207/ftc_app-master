@@ -84,7 +84,6 @@ public class Op_Mecanum_Drive extends OpMode
         telemetry.addData("RB-PWR",Double.toString(rightDriveB.getPower()));
         telemetry.update();                                                     //Make sure telemetry Updates
     }
-
     /*
      * Code to run ONCE after the driver hits STOP
      */
