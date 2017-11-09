@@ -19,6 +19,8 @@ public class Op_Mecanum_Drive extends OpMode
     public static final String LEFTDRIVE_B_MAP = "leftMotorB";                     //Constant for Hardware Map
     public static final String RIGHTDRIVE_F_MAP = "rightMotorF";                   //Constant for Hardware Map
     public static final String RIGHTDRIVE_B_MAP = "rightMotorB";                   //Constant for Hardware Map
+    public static final String CLAWDRIVE_MAP = "clawMotor";                  //Constant for Hardware Map
+    public static final String LIFTDRIVE_MAP = "liftMotor";                  //Constant for Hardware Map
     public static final Double EXPO = 5.0;                                         //Constant for Expo value for control
 
 
@@ -28,7 +30,8 @@ public class Op_Mecanum_Drive extends OpMode
     private DcMotor leftDriveB = null;
     private DcMotor rightDriveF = null;
     private DcMotor rightDriveB = null;
-
+    private DcMotor clawDrive = null;
+    private DcMotor liftDrive = null;
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -41,11 +44,15 @@ public class Op_Mecanum_Drive extends OpMode
         leftDriveB  = hardwareMap.get(DcMotor.class, LEFTDRIVE_B_MAP);
         rightDriveF = hardwareMap.get(DcMotor.class, RIGHTDRIVE_F_MAP);
         rightDriveB = hardwareMap.get(DcMotor.class, RIGHTDRIVE_B_MAP);
+        liftDrive = hardwareMap.get(DcMotor.class, CLAWDRIVE_MAP);
+        clawDrive = hardwareMap.get(DcMotor.class, LIFTDRIVE_MAP);
 
         leftDriveF.setDirection(DcMotor.Direction.REVERSE);
         leftDriveB.setDirection(DcMotor.Direction.REVERSE);
         rightDriveF.setDirection(DcMotor.Direction.FORWARD);
         rightDriveB.setDirection(DcMotor.Direction.FORWARD);
+        clawDrive.setDirection(DcMotor.Direction.FORWARD);
+        liftDrive.setDirection(DcMotor.Direction.FORWARD);
 
         telemetry.addData("Status", "Hardware Ready");
     }
@@ -69,11 +76,22 @@ public class Op_Mecanum_Drive extends OpMode
         double vertComp = gamepad1.left_stick_y;
         double horzComp = gamepad1.left_stick_x;
         double spinComp = gamepad1.right_stick_x;
+        double UpLiftComp = gamepad1.right_trigger;
+        double DownLiftComp = gamepad1.left_trigger;
 
         leftDriveF.setPower (Range.clip((Math.pow((vertComp+horzComp-spinComp),EXPO)),-1,1));
         leftDriveB.setPower (Range.clip((Math.pow((vertComp-horzComp-spinComp),EXPO)),-1,1));
         rightDriveF.setPower(Range.clip((Math.pow((vertComp-horzComp+spinComp),EXPO)),-1,1));
         rightDriveB.setPower(Range.clip((Math.pow((vertComp+horzComp+spinComp),EXPO)),-1,1));
+        clawDrive.setPower(Range.clip((Math.pow((UpLiftComp),EXPO)),-1,1));
+        clawDrive.setPower(Range.clip((Math.pow((-DownLiftComp),EXPO)),-1,1));
+
+        //Moria cantu re na fori ti lon kirin de lono rihjo
+
+        if (gamepad1.right_bumper = true)
+            clawDrive.setPower(1);
+        if (gamepad1.left_bumper = true)
+            clawDrive.setPower(-1);
 
         telemetry.addData("LX",horzComp);
         telemetry.addData("LY",vertComp);

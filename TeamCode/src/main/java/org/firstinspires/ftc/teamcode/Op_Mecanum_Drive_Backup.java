@@ -20,7 +20,7 @@ public class Op_Mecanum_Drive_Backup extends OpMode
     public static final String RIGHTDRIVE_F_MAP = "rightMotorF";                   //Constant for Hardware Map
     public static final String RIGHTDRIVE_B_MAP = "rightMotorB";                   //Constant for Hardware Map
     public static final String LIFT_MOTOR = "liftMotor";
-    public static final String CLAW_MOTOR = "liftMotor";
+    public static final String CLAW_MOTOR = "clawMotor";
     public static final Double EXPO = 5.0;                                         //Constant for Expo value for control
 
 
@@ -80,14 +80,15 @@ public class Op_Mecanum_Drive_Backup extends OpMode
         rightDriveF.setPower(Range.clip((Math.pow((vertComp-horzComp+spinComp),EXPO)),-1,1));
         rightDriveB.setPower(Range.clip((Math.pow((vertComp+horzComp+spinComp),EXPO)),-1,1));
 
-        if (!gamepad1.y)
+        if (gamepad1.right_bumper){clawDrive.setPower(1);}
+        if (gamepad1.left_bumper){clawDrive.setPower(-1);}
+
+        liftDrive.setPower(Range.clip((Math.pow((gamepad1.right_trigger),EXPO)),-1,1));
+
+        if (gamepad1.left_trigger>0)
         {
-            clawDrive.setPower(Range.clip((gamepad1.right_trigger-gamepad1.left_trigger),-1,1));
-        }
-        else
-        {
-            if (gamepad1.right_trigger>0){liftDrive.setPower(Range.clip((Math.pow((gamepad1.right_trigger),EXPO)),-1,1));}
-            else {liftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);}
+            liftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+            liftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
         telemetry.addData("Input LX",horzComp);
         telemetry.addData("Input RX",spinComp);

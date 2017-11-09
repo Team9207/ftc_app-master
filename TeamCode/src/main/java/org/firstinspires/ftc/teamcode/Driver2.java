@@ -103,8 +103,7 @@ public class Driver2 extends LinearOpMode {
             double suckPowerOn = 0.0;
             double armPowerDown;
             double armPowerUp;
-            //double leftPower2;
-            //double rightPower2;
+
 
             // Choose to drive using either Tank Mode, or POV Mode
             // Comment out the method that's not used.  The default below is POV.
