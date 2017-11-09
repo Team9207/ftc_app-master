@@ -89,15 +89,16 @@ public class Op_Mecanum_Drive_Backup extends OpMode
             if (gamepad1.right_trigger>0){liftDrive.setPower(Range.clip((Math.pow((gamepad1.right_trigger),EXPO)),-1,1));}
             else {liftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);}
         }
-        telemetry.addData("LX",horzComp);
-        telemetry.addData("LY",vertComp);
-        telemetry.addData("RX",spinComp);
+        telemetry.addData("Input LX",horzComp);
+        telemetry.addData("Input RX",spinComp);
+        telemetry.addData("Input LY",vertComp);
+        telemetry.addData("Input TR",gamepad1.right_trigger);
+        telemetry.addData("Input TL",gamepad1.left_trigger);
         telemetry.addData ("LF-PWR",Double.toString(leftDriveF.getPower()));
         telemetry.addData ("LB-PWR",Double.toString(leftDriveB.getPower()));
         telemetry.addData("RF-PWR",Double.toString(rightDriveF.getPower()));
         telemetry.addData("RB-PWR",Double.toString(rightDriveB.getPower()));
         telemetry.update();                                                     //Make sure telemetry Updates
-
     }
     /*
      * Code to run ONCE after the driver hits STOP
