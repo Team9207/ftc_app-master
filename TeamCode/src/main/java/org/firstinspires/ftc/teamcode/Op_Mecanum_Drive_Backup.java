@@ -10,15 +10,17 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 
-@TeleOp(name="Mecanum Drive", group="Bot 1")
+@TeleOp(name="Scott's Mecanum Drive", group="Bot 1")
 //@Disabled
-public class Op_Mecanum_Drive extends OpMode
+public class Op_Mecanum_Drive_Backup extends OpMode
 {
     //CONSTANTS
     public static final String LEFTDRIVE_F_MAP = "leftMotorF";                     //Constant for Hardware Map
     public static final String LEFTDRIVE_B_MAP = "leftMotorB";                     //Constant for Hardware Map
     public static final String RIGHTDRIVE_F_MAP = "rightMotorF";                   //Constant for Hardware Map
     public static final String RIGHTDRIVE_B_MAP = "rightMotorB";                   //Constant for Hardware Map
+    public static final String LIFT_MOTOR = "liftMotor";
+    public static final String CLAW_MOTOR = "liftMotor";
     public static final Double EXPO = 5.0;                                         //Constant for Expo value for control
 
 
@@ -28,6 +30,8 @@ public class Op_Mecanum_Drive extends OpMode
     private DcMotor leftDriveB = null;
     private DcMotor rightDriveF = null;
     private DcMotor rightDriveB = null;
+    private DcMotor liftDrive = null;
+    private DcMotor clawDrive = null;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -41,12 +45,15 @@ public class Op_Mecanum_Drive extends OpMode
         leftDriveB  = hardwareMap.get(DcMotor.class, LEFTDRIVE_B_MAP);
         rightDriveF = hardwareMap.get(DcMotor.class, RIGHTDRIVE_F_MAP);
         rightDriveB = hardwareMap.get(DcMotor.class, RIGHTDRIVE_B_MAP);
+        liftDrive = hardwareMap.get(DcMotor.class, LIFT_MOTOR);
+        clawDrive = hardwareMap.get(DcMotor.class, CLAW_MOTOR);
 
         leftDriveF.setDirection(DcMotor.Direction.REVERSE);
         leftDriveB.setDirection(DcMotor.Direction.REVERSE);
         rightDriveF.setDirection(DcMotor.Direction.FORWARD);
         rightDriveB.setDirection(DcMotor.Direction.FORWARD);
-
+        liftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+        clawDrive.setDirection(DcMotorSimple.Direction.FORWARD);
         telemetry.addData("Status", "Hardware Ready");
     }
 
@@ -55,14 +62,12 @@ public class Op_Mecanum_Drive extends OpMode
     {
 
     }
-
-
     @Override
     public void start()                                                         //Runs on start button press
     {
+        liftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);    //Sets liftDrive to hold at beginning
         runtime.reset();
     }
-
     @Override
     public void loop()                                                          //Loops While Running
     {
@@ -75,6 +80,15 @@ public class Op_Mecanum_Drive extends OpMode
         rightDriveF.setPower(Range.clip((Math.pow((vertComp-horzComp+spinComp),EXPO)),-1,1));
         rightDriveB.setPower(Range.clip((Math.pow((vertComp+horzComp+spinComp),EXPO)),-1,1));
 
+        if (!gamepad1.y)
+        {
+            clawDrive.setPower(Range.clip((gamepad1.right_trigger-gamepad1.left_trigger),-1,1));
+        }
+        else
+        {
+            if (gamepad1.right_trigger>0){liftDrive.setPower(Range.clip((Math.pow((gamepad1.right_trigger),EXPO)),-1,1));}
+            else {liftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);}
+        }
         telemetry.addData("LX",horzComp);
         telemetry.addData("LY",vertComp);
         telemetry.addData("RX",spinComp);
