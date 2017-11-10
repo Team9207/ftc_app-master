@@ -81,7 +81,8 @@ public class Op_Mecanum_Drive_Backup extends OpMode
         rightDriveB.setPower(Range.clip((Math.pow((vertComp+horzComp+spinComp),EXPO)),-1,1));
 
         if (gamepad1.right_bumper){clawDrive.setPower(1);}
-        if (gamepad1.left_bumper){clawDrive.setPower(-1);}
+        else if (gamepad1.left_bumper){clawDrive.setPower(-0.25);}
+        else {clawDrive.setPower(0);}
 
         liftDrive.setPower(Range.clip((Math.pow((gamepad1.right_trigger),EXPO)),-1,1));
 
@@ -90,11 +91,14 @@ public class Op_Mecanum_Drive_Backup extends OpMode
             liftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
             liftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
+        if (gamepad1.y){liftDrive.setPower(-.25);}
+
         telemetry.addData("Input LX",horzComp);
         telemetry.addData("Input RX",spinComp);
         telemetry.addData("Input LY",vertComp);
         telemetry.addData("Input TR",gamepad1.right_trigger);
         telemetry.addData("Input TL",gamepad1.left_trigger);
+        telemetry.addData("Input Y",gamepad1.y);
         telemetry.addData ("LF-PWR",Double.toString(leftDriveF.getPower()));
         telemetry.addData ("LB-PWR",Double.toString(leftDriveB.getPower()));
         telemetry.addData("RF-PWR",Double.toString(rightDriveF.getPower()));
